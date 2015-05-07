@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "request": "2.53.0",
+    "cheerio": "0.18.0",
+    "hyperquext": "0.2.12",
+    "underscore": "1.8.2",
+    "phantom": "0.7.1",
+    "json2csv": "2.2.2"
+  },
+  "name": "analytic-validator",
+  "description": "looks for analytic tags when doing A/B testing.",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://jonyet@github.com/jonyet/automaxic.git"
+  },
+  "author": "Jonathan Terry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jonyet/analytic-validator/issues"
+  },
+  "homepage": "https://github.com/jonyet/analytic-validator"
+}
