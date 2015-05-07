@@ -4,7 +4,7 @@ var fs = require('fs'),
 	_ = require('underscore'),
 	phantom = require('phantom'),
 	Output = require('./lib/Output'),
-	Manipulate = require('./lib/Manipulator');
+	Manipulator = require('./lib/Manipulator');
 
 
 var headers = {
@@ -26,6 +26,11 @@ var headers = {
 		}
 }
 
+if (!process.argv[2]){
+	console.error('Usage error: please pass a document containing links you would like to test')
+	process.exit(1)
+}
+
 function phantomGatherer(array, option, type){
 	console.log('>> call received: testing', option.platform, type);
 	var count = 0;
@@ -33,7 +38,6 @@ function phantomGatherer(array, option, type){
 		phantom.create('--ssl-protocol=any', function (ph) {
 			ph.createPage(function (page) {
 				console.log('>> creating a new', type, 'phantom for', option.platform);
-				// console.log(option.agent);
 				page.set('viewportSize', option.viewport);
 		  		page.set('settings', {
                         userAgent: option.agent,
@@ -50,7 +54,7 @@ function phantomGatherer(array, option, type){
 		        	        obj.body = result
 		        	        obj.status = 200
 		        	        console.log('>> extracting tags for', type, option.platform);
-		        	        Manipulate.extractTagData(obj);
+		        	        Manipulator.extractTagData(obj);
 		        	        count++
 		        	        if (count === array.length) {
 		        	        	Output.reporter(array, option, type)
@@ -69,14 +73,14 @@ fs.readFile(process.argv[2], 'utf8', function(err, data){
 		return console.log(err);
 	}		
 	var linkArray = data.split('\n')
-	Manipulate.arrange(linkArray, function(group){
+	Manipulator.arrange(linkArray, function(group){
 			// CHANGEME - context for array length is necessary!
-			// phantomGatherer(_.first(group.control, [4]), headers.desktop, 'control');
+			phantomGatherer(_.first(group.control, [4]), headers.desktop, 'control');
 			phantomGatherer(_.last(group.control, [2]), headers.mobile, 'control'); // for some reason, the second url for mob on control/treat say sso tab, when run parallel with tab.
-			// phantomGatherer(_.last(group.control, [2]), headers.tablet, 'control');
+			phantomGatherer(_.last(group.control, [2]), headers.tablet, 'control');
 
-			// phantomGatherer(_.first(group.treatment, [4]), headers.desktop, 'treatment');
-			// phantomGatherer(_.last(group.treatment, [2]), headers.mobile, 'treatment');
-			// phantomGatherer(_.last(group.treatment, [2]), headers.tablet, 'treatment');
+			phantomGatherer(_.first(group.treatment, [4]), headers.desktop, 'treatment');
+			phantomGatherer(_.last(group.treatment, [2]), headers.mobile, 'treatment');
+			phantomGatherer(_.last(group.treatment, [2]), headers.tablet, 'treatment');
 	});
 });
