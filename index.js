@@ -64,6 +64,8 @@ function phantomGatherer(array, option, type){
 		        	);
 		    	});
 		    });
+		}, {
+ 		   dnodeOpts: {weak: false}
 		});
 	});	
 }
