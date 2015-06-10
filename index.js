@@ -75,9 +75,9 @@ fs.readFile(process.argv[2], 'utf8', function(err, data){
 	var linkArray = data.split('\n')
 	Manipulator.arrange(linkArray, function(group){
 			// CHANGEME - context for array length is necessary!
-			phantomGatherer(_.first(group.control, [4]), headers.desktop, 'control');
-			phantomGatherer(_.last(group.control, [2]), headers.mobile, 'control'); // for some reason, the second url for mob on control/treat say sso tab, when run parallel with tab.
-			phantomGatherer(_.last(group.control, [2]), headers.tablet, 'control');
+			// phantomGatherer(_.first(group.control, [4]), headers.desktop, 'control');
+			// phantomGatherer(_.last(group.control, [2]), headers.mobile, 'control'); // for some reason, the second url for mob on control/treat say sso tab, when run parallel with tab.
+			// phantomGatherer(_.last(group.control, [2]), headers.tablet, 'control');
 
 			phantomGatherer(_.first(group.treatment, [4]), headers.desktop, 'treatment');
 			phantomGatherer(_.last(group.treatment, [2]), headers.mobile, 'treatment');
