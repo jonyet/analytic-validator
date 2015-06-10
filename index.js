@@ -81,8 +81,8 @@ fs.readFile(process.argv[2], 'utf8', function(err, data){
 			// phantomGatherer(_.last(group.control, [2]), headers.mobile, 'control'); // for some reason, the second url for mob on control/treat say sso tab, when run parallel with tab.
 			// phantomGatherer(_.last(group.control, [2]), headers.tablet, 'control');
 
-			phantomGatherer(_.first(group.treatment, [4]), headers.desktop, 'treatment');
-			phantomGatherer(_.last(group.treatment, [2]), headers.mobile, 'treatment');
-			phantomGatherer(_.last(group.treatment, [2]), headers.tablet, 'treatment');
+			// phantomGatherer(_.first(group.treatment, [9]), headers.desktop, 'treatment');
+			// phantomGatherer(_.last(group.treatment, [9]), headers.mobile, 'treatment');
+			phantomGatherer(_.last(group.treatment, [9]), headers.tablet, 'treatment');
 	});
 });
