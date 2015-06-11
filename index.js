@@ -46,8 +46,8 @@ function phantomGatherer(array, option, type){
                     });
 		    	page.open(obj.url, function () {
 		    		console.log('>> loading url for', type, option.platform);
-		    		// var outputFile = './screenshots/screenshot_' + option.platform + '_' + obj.url + '.png';
-					// page.render(outputFile);
+		    		var outputFile = './screenshots/screenshot_' + option.platform + '_' + obj.url + '.png';
+					page.render(outputFile);
 		        	page.evaluate(function() {
 		        		return document.body.innerHTML
 		        	}, function (result) {
@@ -81,8 +81,8 @@ fs.readFile(process.argv[2], 'utf8', function(err, data){
 			// phantomGatherer(_.last(group.control, [2]), headers.mobile, 'control'); // for some reason, the second url for mob on control/treat say sso tab, when run parallel with tab.
 			// phantomGatherer(_.last(group.control, [2]), headers.tablet, 'control');
 
-			// phantomGatherer(_.first(group.treatment, [9]), headers.desktop, 'treatment');
-			// phantomGatherer(_.last(group.treatment, [9]), headers.mobile, 'treatment');
-			phantomGatherer(_.last(group.treatment, [9]), headers.tablet, 'treatment');
+			phantomGatherer(_.first(group.treatment, [8]), headers.desktop, 'treatment');
+			// phantomGatherer(_.last(group.treatment, [7]), headers.mobile, 'treatment');
+			// phantomGatherer(_.last(group.treatment, [7]), headers.tablet, 'treatment');
 	});
 });
