@@ -78,7 +78,7 @@ fs.readFile(process.argv[2], 'utf8', function(err, data){
 	if (err) {
 		return console.log(err);
 	}
-	var linkArray = data.split('\n')
+	var linkArray = data.split(/\r?\n/);
 	console.log(linkArray);
 	Manipulator.arrange(linkArray, function(group){
 			// CHANGEME - context for array length is necessary!

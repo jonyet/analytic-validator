@@ -1,4 +1,4 @@
-# analytic-validator
+#analytic evaluator
 Quickly (ok, sort-of quickly) spin up a series of parallel phantom instances via node and scrape data. Phantom is used because a lot of this stuff gets done in A/B test format, where javascript serves the treatment (B) data on render...otherwise, we wouldn't need a browser of any type, and i'd do it all with hyperquext. Plenty of room for improvement: would be worthwhile to concat the report csv's logically, perhaps add nodemailer, click automation, image download for validation, etc. Right now, this just keeps you from having to view source during test. run this, then go manually trigger you CTA's and validate your creative/copy.
 
 you'll need to create an options.js file with your desired test url hosts. something like this:
@@ -16,6 +16,10 @@ module.exports = {
 };
 
 ```
+
+**External Requirements**
+you must have phantomjs installed and in your path. the node module simply hooks into that binary, it does not provide it.
+tested successfully on 07-07-2016 using phantomjs v1.9.8
 
 **Known Issues**
 - when running parallel instances of phantom spoofing as both tablet and mobile user agents, the mobile phantom instances sometimes render tablet results. when mobile is run alone, it works fine.
