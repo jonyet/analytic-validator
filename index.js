@@ -16,13 +16,13 @@ var headers = {
 		},
 	mobile: {
 		agent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25',
-		platform: 'mobile',
-		viewport: { width : 750, height : 1334}
+		platform: 'mobile'
+		// viewport: { width : 750, height : 1334}
 		},
 	tablet: {
 		agent: 'Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25',
-		platform: 'tablet',
-		viewport: { width : 2048, height : 1536}
+		platform: 'tablet'
+		// viewport: { width : 2048, height : 1536}
 		}
 }
 
@@ -42,12 +42,16 @@ function phantomGatherer(array, option, type){
 		  		page.set('settings', {
                         userAgent: option.agent,
                         javascriptEnabled: true,
-                        loadImages: false
+                        loadImages: true
                     });
+		  		page.set('onLoadFinished', function(success) {
+		  			var outputFile = './screenshots/screenshot_' + option.platform + '_' + obj.url + '.png';
+		  			page.render(outputFile);
+		  			console.log(">> Render complete")
+		  		})
 		    	page.open(obj.url, function () {
 		    		console.log('>> loading url for', type, option.platform);
-		    		var outputFile = './screenshots/screenshot_' + option.platform + '_' + obj.url + '.png';
-					page.render(outputFile);
+		    		// var outputFile = './screenshots/screenshot_' + option.platform + '_' + obj.url + '.png';
 		        	page.evaluate(function() {
 		        		return document.body.innerHTML
 		        	}, function (result) {
@@ -67,22 +71,26 @@ function phantomGatherer(array, option, type){
 		}, {
  		   dnodeOpts: {weak: false}
 		});
-	});	
+	});
 }
 
 fs.readFile(process.argv[2], 'utf8', function(err, data){
 	if (err) {
 		return console.log(err);
-	}		
+	}
 	var linkArray = data.split('\n')
+	console.log(linkArray);
 	Manipulator.arrange(linkArray, function(group){
 			// CHANGEME - context for array length is necessary!
-			// phantomGatherer(_.first(group.control, [4]), headers.desktop, 'control');
+			console.log('group.control');
+			console.log(group.control);
+			console.log(_.first(group.control, [5]));
+			phantomGatherer(_.first(group.control, [5]), headers.desktop, 'control');
 			// phantomGatherer(_.last(group.control, [2]), headers.mobile, 'control'); // for some reason, the second url for mob on control/treat say sso tab, when run parallel with tab.
 			// phantomGatherer(_.last(group.control, [2]), headers.tablet, 'control');
 
-			phantomGatherer(_.first(group.treatment, [8]), headers.desktop, 'treatment');
-			// phantomGatherer(_.last(group.treatment, [7]), headers.mobile, 'treatment');
-			// phantomGatherer(_.last(group.treatment, [7]), headers.tablet, 'treatment');
+			// phantomGatherer(_.first(group.treatment, [11]), headers.desktop, 'treatment');
+			// phantomGatherer(_.last(group.treatment, [99]), headers.mobile, 'treatment');
+			// phantomGatherer(_.last(group.treatment, [99]), headers.tablet, 'treatment');
 	});
 });
